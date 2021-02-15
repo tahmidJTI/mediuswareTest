@@ -17,7 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('products.index');
+        $products = Product::all();
+        return view('products.index',compact('products'));
     }
 
     /**
@@ -39,7 +40,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $inputs = request()->validate([
+           'title' => 'required',
+           'sku' => 'required',
+           'description' => 'required'
+        ]);
 
+        $product = new Product();
+        $product->title = request('title');
+        $product->sku = request('sku');
+        $product->description = request('description');
+        $product->save();
+        return redirect()->route('product.index');
     }
 
 
@@ -63,7 +75,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $variants = Variant::all();
-        return view('products.edit', compact('variants'));
+
+        return view('products.edit', compact('variants','product'));
     }
 
     /**
@@ -75,7 +88,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $inputs = request()->validate([
+            'title' => 'required',
+            'sku' => 'required',
+            'description' => 'required'
+        ]);
+
+        $product->update($inputs);
+        return redirect()->route('product.index');
+
+
+//        dd(request()->all());
     }
 
     /**

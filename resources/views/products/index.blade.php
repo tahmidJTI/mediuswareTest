@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Products</h1>
     </div>
@@ -52,10 +53,12 @@
 
                     <tbody>
 
+                    @foreach($products as $product)
+
                     <tr>
-                        <td>1</td>
-                        <td>T-Shirt <br> Created at : 25-Aug-2020</td>
-                        <td>Quality product in low cost</td>
+                        <td>{{$product->id}}</td>
+                        <td>{{$product->title}} <br> Created at : 25-Aug-2020</td>
+                        <td>{{$product->description}}</td>
                         <td>
                             <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant">
 
@@ -73,10 +76,13 @@
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm">
-                                <a href="{{ route('product.edit', 1) }}" class="btn btn-success">Edit</a>
+                                <a href="{{ route('product.edit', $product->id) }}" class="btn btn-success">Edit</a>
                             </div>
                         </td>
                     </tr>
+
+                    @endforeach
+
 
                     </tbody>
 
